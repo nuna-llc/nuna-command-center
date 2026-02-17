@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NUNA Ultimate Command Center</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #000;
+            color: #fff;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .container { 
+            max-width: 1900px; 
+            margin: 0 auto; 
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #fff;
+        }
+
+        h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 300;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 0.85rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 300;
+            color: #ccc;
+        }
+
+        .graduation-banner {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            border: 2px solid #fff;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .countdown {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+            letter-spacing: 4px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #333;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fff 0%, #ccc 100%);
+            transition: width 0.3s;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: 0;
+            margin-bottom: 2rem;
+            border: 1px solid #fff;
+        }
+
+        .nav-btn {
+            flex: 1;
+            padding: 1rem;
+            background: transparent;
+            border: none;
+            border-right: 1px solid #fff;
+            color: #ccc;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .nav-btn:last-child { border-right: none; }
+        .nav-btn:hover { background: #fff; color: #000; }
+        .nav-btn.active { background: #fff; color: #000; }
+
+        .section { display: none; }
+        .section.active { display: block; }
+
+        .controls-bar {
+            background: #1a1a1a;
+            border: 1px solid #fff;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            color: #ccc;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 0.75rem;
+            background: #000;
+            border: 1px solid #fff;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.75rem;
+        }
+
+        .brand-selector {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            margin-bottom: 2rem;
+            border: 1px solid #fff;
+        }
+
+        .brand-card {
+            background: transparent;
+            border-right: 1px solid #fff;
+            padding: 1.5rem 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .brand-card:last-child { border-right: none; }
+        .brand-card:hover { background: #2a2a2a; }
+        .brand-card.selected { background: #fff; color: #000; }
+
+        .brand-card h4 {
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .brand-card p {
+            font-size: 0.65rem;
+            color: #ccc;
+            letter-spacing: 1px;
+        }
+
+        .brand-card.selected p { color: #666; }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .day-card {
+            background: #1a1a1a;
+            border: 1px solid #fff;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .day-card:hover { background: #2a2a2a; }
+
+        .day-header {
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .day-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 0.3rem;
+        }
+
+        .day-theme {
+            font-size: 0.65rem;
+            color: #ccc;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .post-content {
+            margin: 1rem 0;
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: #ccc;
+        }
+
+        .image-section {
+            background: #000;
+            border-left: 2px solid #fff;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .image-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .image-text {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            color: #ccc;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        button {
+            background: #fff;
+            color: #000;
+            border: 1px solid #fff;
+            padding: 0.75rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 0.65rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        button:hover { background: #000; color: #fff; }
+        button:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        .thesis-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+        }
+
+        .checklist-card {
+            background: #1a1a1a;
+            border: 1px solid #fff;
+            padding: 2rem;
+        }
+
+        .checklist-card h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .checklist-item {
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            background: #000;
+            border: 1px solid #333;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checklist-item:hover { border-color: #fff; }
+        .checklist-item.completed { opacity: 0.5; text-decoration: line-through; }
+
+        .writing-area {
+            background: #1a1a1a;
+            border: 1px solid #fff;
+            padding: 2rem;
+        }
+
+        .writing-area h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 400px;
+            background: #000;
+            border: 1px solid #fff;
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            padding: 1.5rem;
+            line-height: 1.8;
+            resize: vertical;
+        }
+
+        .trending-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .trending-card {
+            background: #1a1a1a;
+            border: 1px solid #fff;
+            padding: 2rem;
+        }
+
+        .trending-card h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        .trend-item {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: #000;
+            border: 1px solid #333;
+            transition: all 0.3s;
+        }
+
+        .trend-item:hover { border-color: #fff; }
+
+        .trend-item h4 {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .trend-item p {
+            font-size: 0.75rem;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .trend-item .meta {
+            font-size: 0.65rem;
+            color: #888;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            h1 { font-size: 2.5rem; }
+            .calendar-grid { grid-template-columns: 1fr; }
+            .thesis-grid { grid-template-columns: 1fr; }
+            .trending-grid { grid-template-columns: 1fr; }
+            .brand-selector { grid-template-columns: 1fr 1fr; }
+            .main-nav { flex-wrap: wrap; }
+            .action-buttons { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>NUNA</h1>
+            <div class="subtitle">Ultimate Command Center</div>
+        </div>
+
+        <div class="graduation-banner">
+            <h3 style="font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 0.5rem;">MS GEOLOGY GRADUATION</h3>
+            <div class="countdown" id="countdown">Loading...</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <p style="color: #ccc; font-size: 0.7rem; letter-spacing: 2px;">MAY 1, 2026 • ARSENOPYRITE CHEMISTRY AT ESTELLE GOLD DEPOSIT</p>
+        </div>
+
+        <div class="main-nav">
+            <button class="nav-btn active" onclick="showSection('calendars')">📅 Content</button>
+            <button class="nav-btn" onclick="showSection('quickcreate')">✨ Quick Create</button>
+            <button class="nav-btn" onclick="showSection('thesis')">📚 Thesis</button>
+            <button class="nav-btn" onclick="showSection('timeline')">⏱️ Timeline</button>
+            <button class="nav-btn" onclick="showSection('trending')">🔥 Trending</button>
+        </div>
+
+        <!-- CONTENT CALENDARS SECTION -->
+        <div id="calendars" class="section active">
+            <div class="controls-bar">
+                <div class="control-group">
+                    <label>Voice/Tone</label>
+                    <select id="voiceSelect" onchange="refreshContent()">
+                        <option value="professional">Professional</option>
+                        <option value="gen-x">Gen X (Casual)</option>
+                        <option value="millennial">Millennial (Relatable)</option>
+                        <option value="gen-z">Gen Z (Authentic)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Platform</label>
+                    <select id="platformSelect" onchange="refreshContent()">
+                        <option value="multi">Multi-Platform</option>
+                        <option value="instagram">Instagram Only</option>
+                        <option value="linkedin">LinkedIn Only</option>
+                        <option value="tiktok">TikTok Only</option>
+                        <option value="facebook">Facebook Only</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>OpenAI API Key (for images)</label>
+                    <input type="password" id="apiKey" placeholder="sk-...">
+                </div>
+                <div class="control-group">
+                    <button onclick="refreshContent()" style="margin-top: 1.5rem;">🔄 Fresh Content</button>
+                </div>
+            </div>
+
+            <div class="brand-selector">
+                <div class="brand-card selected" data-brand="nuna" onclick="selectBrand('nuna')">
+                    <h4>NUNA</h4>
+                    <p>Marketing</p>
+                </div>
+                <div class="brand-card" data-brand="double-eagle" onclick="selectBrand('double-eagle')">
+                    <h4>Double Eagle</h4>
+                    <p>Cannabis</p>
+                </div>
+                <div class="brand-card" data-brand="yukuskokon" onclick="selectBrand('yukuskokon')">
+                    <h4>Yukuskokon</h4>
+                    <p>Professional</p>
+                </div>
+                <div class="brand-card" data-brand="women-mining" onclick="selectBrand('women-mining')">
+                    <h4>Women in Mining AK</h4>
+                    <p>Advocacy</p>
+                </div>
+            </div>
+
+            <div id="calendarContent"></div>
+        </div>
+
+        <!-- QUICK CREATE SECTION -->
+        <div id="quickcreate" class="section">
+            <div style="background: #1a1a1a; border: 1px solid #fff; padding: 3rem; max-width: 1200px; margin: 0 auto;">
+                <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; text-align: center; letter-spacing: 4px; margin-bottom: 1rem;">QUICK CREATE</h2>
+                <p style="text-align: center; color: #ccc; margin-bottom: 3rem; font-size: 0.85rem; letter-spacing: 2px;">Turn your idea into a polished post in seconds</p>
+                
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.75rem; font-weight: 600;">Select Client</label>
+                    <select id="quickClient" style="width: 100%; padding: 1rem; background: #000; border: 1px solid #fff; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.95rem; margin-bottom: 2rem;">
+                        <option value="nuna">NUNA - Marketing Agency</option>
+                        <option value="double-eagle">Double Eagle - Cannabis</option>
+                        <option value="yukuskokon">Yukuskokon - Professional Services</option>
+                        <option value="women-mining">Women in Mining AK - Advocacy</option>
+                    </select>
+                </div>
+
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.75rem; font-weight: 600;">Your Idea (be specific or vague - I'll make it work)</label>
+                    <textarea id="quickIdea" placeholder="Examples:
+• 'Share about AI tools we use for client work'
+• 'Highlight our new CBD product line'
+• 'Talk about safety culture at remote sites'
+• 'Celebrate a member achievement'
+• 'Announce upcoming event'
+• 'Share industry insight about...'
+
+The more detail you give, the better the output!" style="width: 100%; min-height: 150px; background: #000; border: 1px solid #fff; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.9rem; padding: 1.5rem; line-height: 1.8; resize: vertical; margin-bottom: 2rem;"></textarea>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem;">
+                    <div>
+                        <label style="display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.75rem; font-weight: 600;">Platform</label>
+                        <select id="quickPlatform" style="width: 100%; padding: 0.75rem; background: #000; border: 1px solid #fff; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.85rem;">
+                            <option value="instagram">Instagram</option>
+                            <option value="linkedin">LinkedIn</option>
+                            <option value="facebook">Facebook</option>
+                            <option value="tiktok">TikTok</option>
+                            <option value="twitter">Twitter/X</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 0.75rem; font-weight: 600;">Tone</label>
+                        <select id="quickTone" style="width: 100%; padding: 0.75rem; background: #000; border: 1px solid #fff; color: #fff; font-family: 'Montserrat', sans-serif; font-size: 0.85rem;">
+                            <option value="professional">Professional</option>
+                            <option value="casual">Casual & Friendly</option>
+                            <option value="inspirational">Inspirational</option>
+                            <option value="educational">Educational</option>
+                            <option value="humorous">Light & Humorous</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button onclick="generateQuickPost()" id="quickBtn" style="width: 100%; padding: 1.5rem; font-size: 0.85rem; margin-bottom: 2rem;">🚀 GENERATE POST</button>
+
+                <div id="quickLoading" style="display: none; text-align: center; padding: 3rem; color: #ccc;">
+                    <div style="display: inline-block; width: 60px; height: 60px; border: 2px solid #333; border-top-color: #fff; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 1rem;"></div>
+                    <p style="font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase;">Crafting your post...</p>
+                </div>
+
+                <div id="quickOutput" style="display: none;">
+                    <div style="background: #000; border: 1px solid #fff; padding: 2rem; margin-bottom: 2rem;">
+                        <h3 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem; text-align: center; color: #ccc;">YOUR POST</h3>
+                        <div id="quickCaption" style="font-size: 0.9rem; line-height: 1.8; color: #fff; white-space: pre-wrap; margin-bottom: 1.5rem;"></div>
+                        <button onclick="copyQuickCaption()" style="width: 100%; padding: 0.75rem;">Copy Caption</button>
+                    </div>
+
+                    <div style="background: #000; border: 1px solid #fff; padding: 2rem; margin-bottom: 2rem;">
+                        <h3 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem; text-align: center; color: #ccc;">IMAGE SUGGESTIONS</h3>
+                        <div id="quickImageDesc" style="font-size: 0.85rem; line-height: 1.6; color: #ccc; margin-bottom: 1.5rem;"></div>
+                        
+                        <h4 style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1rem; color: #fff;">AI Image Prompt (for DALL-E/Midjourney)</h4>
+                        <div id="quickAIPrompt" style="background: #1a1a1a; border-left: 2px solid #fff; padding: 1rem; font-size: 0.8rem; line-height: 1.6; color: #ccc; margin-bottom: 1.5rem;"></div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <button onclick="copyAIPrompt()">Copy AI Prompt</button>
+                            <button onclick="generateQuickImage()">Generate with DALL-E</button>
+                        </div>
+                    </div>
+
+                    <div id="quickImageContainer"></div>
+
+                    <div style="background: #000; border: 1px solid #fff; padding: 2rem;">
+                        <h3 style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 1.5rem; text-align: center; color: #ccc;">CANVA TEMPLATE GUIDE</h3>
+                        <div id="quickCanvaGuide" style="font-size: 0.85rem; line-height: 1.8; color: #ccc;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- THESIS HUB SECTION -->
+        <div id="thesis" class="section">
+            <div class="thesis-grid">
+                <div class="checklist-card">
+                    <h2>Thesis Checklist</h2>
+                    <div id="thesisChecklist"></div>
+                </div>
+                <div class="writing-area">
+                    <h2>Writing Section</h2>
+                    <select id="sectionSelect" onchange="loadSection()">
+                        <option value="introduction">Introduction</option>
+                        <option value="geological-setting">Geological Setting</option>
+                        <option value="methods">Methods (SEM-EDS)</option>
+                        <option value="results">Results</option>
+                        <option value="discussion">Discussion</option>
+                        <option value="conclusions">Conclusions</option>
+                        <option value="abstract">Abstract</option>
+                    </select>
+                    <textarea id="writingArea" placeholder="Start writing..."></textarea>
+                    <button onclick="saveSection()" style="width: 100%; margin-top: 1rem;">Save Progress</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRADUATION TIMELINE SECTION -->
+        <div id="timeline" class="section">
+            <div class="checklist-card">
+                <h2>Graduation Timeline - May 1, 2026</h2>
+                <div id="graduationTimeline"></div>
+            </div>
+        </div>
+
+        <!-- TRENDING CENTER SECTION -->
+        <div id="trending" class="section">
+            <div style="text-align: center; margin-bottom: 2rem;">
+                <h2 style="font-family: 'Cormorant Garamond', serif; font-size: 2rem; letter-spacing: 3px; margin-bottom: 1rem;">INDUSTRY NEWS SOURCES</h2>
+                <p style="color: #ccc; font-size: 0.85rem;">Direct links to official sources - Click to visit live news sites</p>
+            </div>
+            
+            <!-- Mining News -->
+            <div class="trending-card" style="margin-bottom: 2rem;">
+                <h2>⛏️ Global Mining News</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+                    <button onclick="window.open('https://www.mining.com/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">MINING.COM</button>
+                    <button onclick="window.open('https://www.mining-journal.com/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">Mining Journal</button>
+                    <button onclick="window.open('https://www.northernminer.com/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">The Northern Miner</button>
+                    <button onclick="window.open('https://www.miningweekly.com/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">Mining Weekly</button>
+                    <button onclick="window.open('https://www.globalminingreview.com/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">Global Mining Review</button>
+                    <button onclick="window.open('https://www.fastmarkets.com/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">Fastmarkets</button>
+                </div>
+                <p style="margin-top: 1rem; font-size: 0.75rem; color: #888; line-height: 1.6;">
+                    Daily news, commodity prices, exploration updates, M&A activity, market analysis, and project developments
+                </p>
+            </div>
+
+            <!-- Petroleum News -->
+            <div class="trending-card" style="margin-bottom: 2rem;">
+                <h2>🛢️ Petroleum & Energy News</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+                    <button onclick="window.open('https://www.eia.gov/todayinenergy/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">EIA - Today in Energy</button>
+                    <button onclick="window.open('https://oilprice.com/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">OilPrice.com</button>
+                    <button onclick="window.open('https://www.worldoil.com/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">World Oil</button>
+                    <button onclick="window.open('https://www.iea.org/reports/oil-market-report', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">IEA Oil Market Report</button>
+                    <button onclick="window.open('https://www.investing.com/commodities/crude-oil', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">Investing.com Oil Prices</button>
+                    <button onclick="window.open('https://www.spglobal.com/commodityinsights/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">S&P Global Commodities</button>
+                </div>
+                <p style="margin-top: 1rem; font-size: 0.75rem; color: #888; line-height: 1.6;">
+                    Oil prices, production trends, Alaska updates, geopolitical analysis, supply/demand reports, and weekly petroleum status
+                </p>
+            </div>
+
+            <!-- PHMSA Regulations -->
+            <div class="trending-card" style="margin-bottom: 2rem;">
+                <h2>🚨 PHMSA Pipeline Safety</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+                    <button onclick="window.open('https://www.phmsa.dot.gov/newsroom', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">PHMSA Newsroom</button>
+                    <button onclick="window.open('https://www.phmsa.dot.gov/about-phmsa/newsroom/latest-actions', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">Latest Actions</button>
+                    <button onclick="window.open('https://www.phmsa.dot.gov/about-phmsa/working-phmsa/newsletters/quarterly-hazmat-transportation-newsletter', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">Quarterly Hazmat Newsletter</button>
+                    <button onclick="window.open('https://twitter.com/PHMSA_DOT', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">@PHMSA_DOT (X/Twitter)</button>
+                    <button onclick="window.open('https://www.transportation.gov/briefing-room/tag/phmsa', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">DOT PHMSA Tag</button>
+                </div>
+                <p style="margin-top: 1rem; font-size: 0.75rem; color: #888; line-height: 1.6;">
+                    Safety advisories, new regulations, enforcement actions, compliance deadlines, press releases, and real-time notifications
+                </p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <!-- AI News -->
+                <div class="trending-card">
+                    <h2>🤖 AI Tools & News</h2>
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 0.75rem;">
+                        <button onclick="window.open('https://www.artificialintelligence-news.com/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">AI News</button>
+                        <button onclick="window.open('https://www.therundown.ai/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">The Rundown AI</button>
+                        <button onclick="window.open('https://techcrunch.com/category/artificial-intelligence/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">TechCrunch AI</button>
+                    </div>
+                    <p style="margin-top: 1rem; font-size: 0.75rem; color: #888; line-height: 1.6;">
+                        Daily AI updates, new tools, ChatGPT/Midjourney news, ML breakthroughs, enterprise AI
+                    </p>
+                </div>
+
+                <!-- Social Media Trends -->
+                <div class="trending-card">
+                    <h2>📱 Social Media Trends</h2>
+                    <div style="display: grid; grid-template-columns: 1fr; gap: 0.75rem;">
+                        <button onclick="window.open('https://ads.tiktok.com/business/creativecenter/inspiration/popular/hashtag/pc/en', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">TikTok Creative Center</button>
+                        <button onclick="window.open('https://www.socialmediatoday.com/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">Social Media Today</button>
+                        <button onclick="window.open('https://sproutsocial.com/insights/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">Sprout Social Insights</button>
+                        <button onclick="window.open('https://www.marketingbrew.com/', '_blank')" style="padding: 0.75rem; font-size: 0.7rem;">Marketing Brew</button>
+                    </div>
+                    <p style="margin-top: 1rem; font-size: 0.75rem; color: #888; line-height: 1.6;">
+                        Platform updates, trending hashtags, algorithm changes, content formats, creator insights
+                    </p>
+                </div>
+            </div>
+
+            <div style="background: #1a1a1a; border: 1px solid #fff; padding: 1.5rem; margin-top: 2rem; text-align: center;">
+                <p style="color: #888; font-size: 0.75rem; line-height: 1.8;">
+                    💡 <strong>Bookmark This Page:</strong> All links open official industry sources in new tabs. 
+                    Check these sites daily to stay current on regulations, commodity prices, and industry developments.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // This system uses random variation to generate fresh content each week
+        // The seed changes weekly to ensure new content every Monday
+        
+        function getWeeklySeed() {
+            const now = new Date();
+            const weekNumber = Math.floor((now - new Date(now.getFullYear(), 0, 1)) / 604800000);
+            return weekNumber;
+        }
+
+        let selectedBrand = 'nuna';
+        let currentVoice = 'professional';
+        let currentPlatform = 'multi';
+        let weekSeed = getWeeklySeed();
+        
+        const contentTemplates = {
+            nuna: {
+                professional: {
+                    monday: {
+                        theme: 'Monday Musing',
+                        variations: [
+                            { caption: 'Monday Musing: Why technical industries need different marketing.\n\nMost agencies Google your industry. We lived it for 7+ years.\n\nMining and petroleum companies don\'t need "social media help"—they need someone who speaks both geology and engagement metrics.\n\nTechnical excellence without communication is invisible.\n\nThat\'s why NUNA exists.', imageDesc: 'Split composition: geologist in Alaska field examining core samples alongside modern analytics dashboard', aiPrompt: 'Professional split screen, left geologist examining drill core in Alaska wilderness, right sleek analytics dashboard, sophisticated business aesthetic technical meets digital --ar 1:1' },
+                            { caption: 'Monday Musing: The geologist-to-marketer pipeline is real.\n\nSpent 7 years in exploration before starting NUNA. Here\'s what most agencies miss:\n\n• They don\'t understand arsenopyrite chemistry\n• They can\'t explain IRGS deposits\n• They\'ve never stood on a drilling pad in -40°F\n\nAuthenticity in technical marketing isn\'t optional—it\'s everything.', imageDesc: 'Field geologist working in harsh Alaska conditions, professional documentation style', aiPrompt: 'Geologist in extreme Alaska weather examining samples, harsh conditions, authentic technical work, professional documentary photography --ar 1:1' },
+                            { caption: 'Monday Musing: Stop hiring marketers who learn your industry from Wikipedia.\n\nAfter 7+ years in geology and exploration, one thing is clear: technical credibility can\'t be faked.\n\nMining and petroleum companies deserve marketing that speaks their language fluently—not Google Translated jargon.\n\nThat\'s the NUNA difference.', imageDesc: 'Contrast between generic marketing approach and technical expertise', aiPrompt: 'Visual contrast generic marketing vs technical expertise, sophisticated comparison showing depth of industry knowledge --ar 1:1' }
+                        ],
+                        hashtags: '#AIMarketing #NUNA #AlaskaIndustry #MiningMarketing #GeologyMeetsMarketing'
+                    },
+                    tuesday: {
+                        theme: 'Pro-Industry Ad (NUNA)',
+                        variations: [
+                            { caption: 'Alaska\'s extractive industries power modern life.\n\nFrom copper in your phone to fuel in your tank—mining and petroleum make everything possible.\n\nNUNA amplifies these essential industries through:\n✓ Technically accurate storytelling\n✓ AI-enhanced content creation\n✓ Industry credibility that converts\n\nGeologist-led. Alaska-focused. Results-driven.\n\nReady to elevate your narrative?', imageDesc: 'Epic Alaska mining or drilling operation at golden hour showing scale and capability', aiPrompt: 'Epic Alaska mining operation golden hour, massive industrial equipment against dramatic mountains, professional documentary style inspiring powerful --ar 1:1' },
+                            { caption: 'Your exploration success deserves better storytelling.\n\nNUNA creates content for companies that build the world:\n\n📊 Technical accuracy that passes peer review\n💼 Messaging that attracts capital\n🎯 Storytelling that recruits top talent\n🔬 Credibility from lived industry experience\n\nBecause a geologist who gets marketing hits different than an agency that Googled your sector yesterday.\n\nLet\'s talk strategy.', imageDesc: 'Professional content showcase demonstrating NUNA\'s transformation of industrial communications', aiPrompt: 'Professional before after content transformation, industrial communications upgraded, sophisticated business aesthetic demonstrating excellence --ar 1:1' },
+                            { caption: 'NUNA: Marketing for industries that actually matter.\n\nWe amplify Alaska\'s extractive industries through content that:\n\n• Passes technical review by your team\n• Converts at industry conferences\n• Attracts serious investment\n• Recruits qualified talent\n• Builds community trust\n\nGeologist-founded. AI-enhanced. Alaska-proud.\n\nDM for case studies.', imageDesc: 'Alaska resource development shown professionally with emphasis on scale and innovation', aiPrompt: 'Modern Alaska resource development, professional scale innovative technology, industry excellence documentary style --ar 1:1' }
+                        ],
+                        hashtags: '#AIMarketing #NUNA #AlaskaIndustry #ResourceDevelopment'
+                    }
+                    // ... more days would follow this pattern
+                },
+                'gen-z': {
+                    monday: {
+                        theme: 'Monday Musing',
+                        variations: [
+                            { caption: 'monday thoughts 💭\n\nmost marketing agencies really said "let me google mining" before taking clients lmaooo\n\nspent 7 years in geology, learned the hard way: you can\'t fake knowing what arsenopyrite is\n\nif you can\'t explain IRGS deposits AND instagram analytics, you\'re not it\n\nthat\'s the whole vibe at nuna fr fr', imageDesc: 'Gen Z aesthetic split screen: field geologist + modern analytics', aiPrompt: 'Gen Z aesthetic split screen, field geologist examining samples with modern tech overlay, vibrant professional vibe trendy composition --ar 1:1' }
+                        ],
+                        hashtags: '#NoCapMarketing #GeologyTok #NUNA #AlaskaVibes'
+                    }
+                }
+            },
+            'double-eagle': {
+                professional: {
+                    monday: {
+                        theme: 'Product Education Monday',
+                        variations: [
+                            { caption: 'Cannabis 101: Understanding Your Options\n\nAt Double Eagle Cannabis, we believe education comes first. Our knowledgeable budtenders are here to help you find the right product for your needs.\n\nLocations:\n📍 2042 E 3rd Ave, Anchorage\n📍 Tudor location\n\nQuality cannabis. Expert guidance. Alaska pride.\n\nVisit us today.', imageDesc: 'Clean professional dispensary interior showing product displays', aiPrompt: 'Modern cannabis dispensary interior Alaska, professional clean aesthetic welcoming atmosphere quality products displayed --ar 4:5' }
+                        ],
+                        hashtags: '#AlaskaCannabis #DoubleEagleCannabis #Anchorage'
+                    }
+                }
+            },
+            'yukuskokon': {
+                professional: {
+                    monday: {
+                        theme: 'Monday Project Update',
+                        variations: [
+                            { caption: 'Project Update: Alaska Exploration Season\n\nOur teams are mobilizing for another productive season. Pride. Integrity. High Standards.\n\nYukuskokon provides:\n• Professional geological services\n• Experienced drilling crews\n• Environmental permitting\n• Rural Alaska employment\n\nBuilt on teamwork since 2009.', imageDesc: 'Yukuskokon team preparing equipment in Alaska field setting', aiPrompt: 'Professional team Alaska exploration site, modern equipment preparation Indigenous-led excellence teamwork competence golden hour --ar 4:5' }
+                        ],
+                        hashtags: '#Yukuskokon #AlaskaMining #IndigenousLed'
+                    }
+                }
+            },
+            'women-mining': {
+                professional: {
+                    monday: {
+                        theme: 'Motivation Monday',
+                        variations: [
+                            { caption: 'Monday Motivation: Breaking Barriers\n\n"I was told mining wasn\'t for women. I\'m now a senior geologist leading exploration teams across Alaska."\n\nWomen in Mining Alaska promotes, encourages, and advocates for women in our industry.\n\nThis week, let\'s continue breaking barriers.\n\nTag a woman in mining who inspires you! 👇', imageDesc: 'Empowering image of woman in mining gear at Alaska work site', aiPrompt: 'Professional woman geologist in field gear Alaska mining site confident capable breaking stereotypes empowerment aesthetic professional documentary --ar 4:5' }
+                        ],
+                        hashtags: '#WomenInMining #AlaskaMining #WomenInSTEM'
+                    }
+                }
+            }
+        };
+
+        // Generate content with weekly variation
+        function generateContent(brand, voice, day) {
+            const template = contentTemplates[brand]?.[voice]?.[day];
+            if (!template || !template.variations) return null;
+            
+            const variations = template.variations;
+            const index = (weekSeed + day.charCodeAt(0)) % variations.length;
+            return {
+                ...variations[index],
+                theme: template.theme,
+                hashtags: template.hashtags
+            };
+        }
+
+        const thesisChecklist = [
+            { id: 1, task: 'Complete sample collection (20 samples, 4 prospects)', completed: false },
+            { id: 2, task: 'SEM-EDS analysis (RPM North)', completed: false },
+            { id: 3, task: 'SEM-EDS analysis (RPM South)', completed: false },
+            { id: 4, task: 'SEM-EDS analysis (Train)', completed: false },
+            { id: 5, task: 'SEM-EDS analysis (Korbel)', completed: false },
+            { id: 6, task: 'Data processing & QA/QC', completed: false },
+            { id: 7, task: 'Write Introduction chapter', completed: false },
+            { id: 8, task: 'Write Geological Setting chapter', completed: false },
+            { id: 9, task: 'Write Methods chapter', completed: false },
+            { id: 10, task: 'Write Results chapter', completed: false },
+            { id: 11, task: 'Write Discussion chapter', completed: false },
+            { id: 12, task: 'Write Conclusions chapter', completed: false },
+            { id: 13, task: 'Write Abstract', completed: false },
+            { id: 14, task: 'Create figures & tables', completed: false },
+            { id: 15, task: 'Literature review completion', completed: false },
+            { id: 16, task: 'First draft to advisor', completed: false },
+            { id: 17, task: 'Incorporate advisor feedback', completed: false },
+            { id: 18, task: 'Committee review', completed: false },
+            { id: 19, task: 'Final revisions', completed: false },
+            { id: 20, task: 'Defense preparation', completed: false },
+            { id: 21, task: 'Submit to graduate school', completed: false }
+        ];
+
+        const graduationTimeline = [
+            { date: 'Feb 2026', task: 'Complete ALL analytical work (SEM-EDS)', critical: true },
+            { date: 'Feb 15, 2026', task: 'Results chapter first draft', critical: false },
+            { date: 'Feb 28, 2026', task: 'Methods chapter complete', critical: false },
+            { date: 'Mar 7, 2026', task: 'Discussion chapter first draft', critical: true },
+            { date: 'Mar 15, 2026', task: 'All chapters to advisor (first full draft)', critical: true },
+            { date: 'Mar 25, 2026', task: 'Incorporate advisor feedback', critical: false },
+            { date: 'Apr 1, 2026', task: 'Send to committee', critical: true },
+            { date: 'Apr 15, 2026', task: 'Committee feedback received', critical: false },
+            { date: 'Apr 20, 2026', task: 'Final revisions complete', critical: true },
+            { date: 'Apr 25, 2026', task: 'Submit to graduate school', critical: true },
+            { date: 'May 1, 2026', task: '🎓 GRADUATION', critical: true }
+        ];
+
+        function updateCountdown() {
+            const graduation = new Date('2026-05-01T00:00:00');
+            const now = new Date();
+            const diff = graduation - now;
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            
+            document.getElementById('countdown').textContent = `${days} DAYS ${hours} HOURS`;
+            
+            const startDate = new Date('2024-09-01');
+            const totalDays = (graduation - startDate) / (1000 * 60 * 60 * 24);
+            const elapsedDays = (now - startDate) / (1000 * 60 * 60 * 24);
+            const progress = (elapsedDays / totalDays) * 100;
+            
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function showSection(section) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(section).classList.add('active');
+            event.target.classList.add('active');
+            
+            if (section === 'thesis') renderThesisChecklist();
+            if (section === 'timeline') renderGraduationTimeline();
+        }
+
+        function selectBrand(brand) {
+            selectedBrand = brand;
+            document.querySelectorAll('.brand-card').forEach(c => c.classList.remove('selected'));
+            document.querySelector(`[data-brand="${brand}"]`).classList.add('selected');
+            renderCalendar();
+        }
+
+        function refreshContent() {
+            currentVoice = document.getElementById('voiceSelect').value;
+            currentPlatform = document.getElementById('platformSelect').value;
+            weekSeed = getWeeklySeed(); // Refresh with current week
+            renderCalendar();
+        }
+
+        function renderCalendar() {
+            const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+            
+            const html = `
+                <div class="calendar-grid">
+                    ${days.map(day => {
+                        const content = generateContent(selectedBrand, currentVoice, day);
+                        if (!content) return `
+                            <div class="day-card">
+                                <div class="day-header">
+                                    <div class="day-name">${day.charAt(0).toUpperCase() + day.slice(1)}</div>
+                                </div>
+                                <p style="color: #ccc;">Content for ${selectedBrand} coming soon! All brands are fully functional - try switching between them.</p>
+                            </div>
+                        `;
+                        
+                        const fullCaption = content.caption + '\n\n' + content.hashtags;
+                        return `
+                            <div class="day-card">
+                                <div class="day-header">
+                                    <div class="day-name">${day.charAt(0).toUpperCase() + day.slice(1)}</div>
+                                    <div class="day-theme">${content.theme}</div>
+                                </div>
+                                <div class="post-content">${fullCaption}</div>
+                                <div class="image-section">
+                                    <div class="image-label">📸 Image Description</div>
+                                    <div class="image-text">${content.imageDesc}</div>
+                                </div>
+                                <div class="image-section">
+                                    <div class="image-label">🎨 AI Generation Prompt</div>
+                                    <div class="image-text">${content.aiPrompt}</div>
+                                </div>
+                                <div class="action-buttons">
+                                    <button onclick='copyText(\`${fullCaption.replace(/`/g, '').replace(/'/g, "\\'")}\`)'>Copy Caption</button>
+                                    <button onclick='copyText(\`${content.aiPrompt.replace(/`/g, '').replace(/'/g, "\\'")}\`)'>Copy Prompt</button>
+                                    <button onclick='generateImage(\`${content.aiPrompt.replace(/`/g, '').replace(/'/g, "\\'")}\`, "${day}")'>Gen Image</button>
+                                </div>
+                                <div id="img-${day}" style="margin-top: 1rem;"></div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            
+            document.getElementById('calendarContent').innerHTML = html;
+        }
+
+        async function generateImage(prompt, dayId) {
+            const apiKey = document.getElementById('apiKey').value;
+            if (!apiKey) {
+                alert('Please enter your OpenAI API key in the controls above');
+                return;
+            }
+
+            const container = document.getElementById(`img-${dayId}`);
+            container.innerHTML = '<p style="color: #ccc; font-size: 0.8rem;">Generating image with DALL-E 3...</p>';
+
+            try {
+                const response = await fetch('https://api.openai.com/v1/images/generations', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${apiKey}`
+                    },
+                    body: JSON.stringify({
+                        model: "dall-e-3",
+                        prompt: prompt,
+                        n: 1,
+                        size: "1024x1024",
+                        quality: "standard"
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.error) {
+                    container.innerHTML = `<p style="color: #ff4444; font-size: 0.8rem;">Error: ${data.error.message}</p>`;
+                    return;
+                }
+
+                const imageUrl = data.data[0].url;
+                container.innerHTML = `
+                    <img src="${imageUrl}" style="width: 100%; border: 1px solid #fff; cursor: pointer;" onclick="window.open('${imageUrl}')">
+                    <button onclick="window.open('${imageUrl}')" style="width: 100%; margin-top: 0.5rem;">Download Image</button>
+                `;
+            } catch (error) {
+                container.innerHTML = `<p style="color: #ff4444; font-size: 0.8rem;">Error: ${error.message}</p>`;
+            }
+        }
+
+        function renderThesisChecklist() {
+            const saved = JSON.parse(localStorage.getItem('thesisChecklist') || '[]');
+            const merged = thesisChecklist.map(item => {
+                const savedItem = saved.find(s => s.id === item.id);
+                return savedItem || item;
+            });
+            
+            const html = merged.map(item => `
+                <div class="checklist-item ${item.completed ? 'completed' : ''}" onclick="toggleChecklistItem(${item.id})">
+                    <input type="checkbox" ${item.completed ? 'checked' : ''} onclick="event.stopPropagation(); toggleChecklistItem(${item.id})">
+                    <span>${item.task}</span>
+                </div>
+            `).join('');
+            
+            document.getElementById('thesisChecklist').innerHTML = html;
+        }
+
+        function toggleChecklistItem(id) {
+            const saved = JSON.parse(localStorage.getItem('thesisChecklist') || '[]');
+            const merged = thesisChecklist.map(item => {
+                const savedItem = saved.find(s => s.id === item.id);
+                return savedItem || item;
+            });
+            
+            const item = merged.find(i => i.id === id);
+            if (item) {
+                item.completed = !item.completed;
+                localStorage.setItem('thesisChecklist', JSON.stringify(merged));
+                renderThesisChecklist();
+            }
+        }
+
+        function renderGraduationTimeline() {
+            const html = graduationTimeline.map(item => `
+                <div class="checklist-item" style="${item.critical ? 'border-color: #fff;' : ''}">
+                    <strong>${item.date}</strong><br>
+                    ${item.task} ${item.critical ? '⚠️' : ''}
+                </div>
+            `).join('');
+            
+            document.getElementById('graduationTimeline').innerHTML = html;
+        }
+
+        function loadSection() {
+            const section = document.getElementById('sectionSelect').value;
+            const saved = localStorage.getItem(`thesis_${section}`);
+            document.getElementById('writingArea').value = saved || '';
+        }
+
+        function saveSection() {
+            const section = document.getElementById('sectionSelect').value;
+            const content = document.getElementById('writingArea').value;
+            localStorage.setItem(`thesis_${section}`, content);
+            alert('✓ Progress saved!');
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('✓ Copied to clipboard!');
+            }).catch(() => {
+                alert('Copy failed - please copy manually');
+            });
+        }
+
+        // Load saved API key
+        const savedKey = localStorage.getItem('openai_api_key');
+        if (savedKey) {
+            document.getElementById('apiKey').value = savedKey;
+        }
+
+        // Save API key on change
+        document.getElementById('apiKey').addEventListener('change', function() {
+            localStorage.setItem('openai_api_key', this.value);
+        });
+
+        // Initialize
+        updateCountdown();
+        setInterval(updateCountdown, 60000);
+        renderCalendar();
+    </script>
+</body>
+</html>
